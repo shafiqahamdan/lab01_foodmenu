@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>LAB_01</title>
+<script src="jquery-3.1.1.min.js" type="text/javascript"></script>
+<script>
+
+	$(document).ready(function(){
+		$("#Waffle").append("<div></div>");
+		$("#Waffle_info").append("<div></div>");
+		$.ajax({
+			type: "GET",
+			url: "food_menu.xml",
+			dataType: "xml",
+			success: function(xml){
+				$(xml).find('food').each(function(){
+					var Titles = $(this).find('name').text();
+					var Prices = $(this).find('price').text();
+					var Desc = $(this).find('description').text();
+					var Cal = $(this).find('calories').text();
+					var Pic = $(this).find('image').text();
+					$("<img />")
+                        .attr('src', "" + Pic + "")
+                        .css('margin-top', '20px')
+                            .width('250px').height('150px')
+                        .appendTo($('#Waffle div'));
+					$("<p></p").html("<strong>"+ Titles + "</strong>" + ", " + Prices + "<br><br>" + Desc + "<br>Calories: " + Cal + "<br><br><br><hr>").appendTo($("#Waffle div"));
+				});
+			},
+			error: function(){
+				alert("The XML File could not be processed correctly.");
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<div><h2 style="text-align: center; margin: 40px 0">Food Menu</h2></div>
+	<div id="Waffle" style="text-align: center">
+	</div>
+
+</body>
+</html>
+
